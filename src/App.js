@@ -25,7 +25,7 @@ function App() {
         axios.get(`${BASE_URL}/ping`),
         axios.get(`${BASE_URL}/stats`)
       ]);
-      console.log('health response', await healthRes.json());
+      console.log('health response', healthRes);
       setHealth("Online");
       setStats(statsRes.data);
     } catch {
