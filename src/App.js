@@ -9,6 +9,7 @@ const BASE_URL = "https://polaris0512-smart-document-ask.hf.space";
 
 function App() {
   const [messages, setMessages] = useState([]);
+
   const [input, setInput] = useState("");
   const [stats, setStats] = useState({});
   const [health, setHealth] = useState("Checking...");
@@ -46,7 +47,7 @@ function App() {
         question: input,
         top_k: topK
       });
-      setMessages(prev => [...prev, { role: 'bot', text: res.data.answer }]);
+      setMessages(prev => [...prev, { role: 'bot', text: res.data.answer || res.data.message }]);
     } catch {
       setMessages(prev => [...prev, { role: 'bot', text: "Model error." }]);
     } finally {
@@ -54,9 +55,11 @@ function App() {
     }
   };
 
+
+
   return (
     <div className="app-layout">
-      <Sidebar health={health} stats={stats} topK={topK} setTopK={setTopK} />
+      <Sidebar health={health} stats={stats} topK={topK} setTopK={setTopK} BASE_URL={BASE_URL} />
 
       <div className="main-content">
         <FileUpload baseUrl={BASE_URL} onUploadSuccess={refreshSystemData} />
