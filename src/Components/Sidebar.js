@@ -16,6 +16,7 @@ const Sidebar = ({ health, stats, topK, setTopK, BASE_URL }) => {
             setTotalDoc(data.total_documents)
         } catch {
             console.log("get document error")
+            setIsloading(false)
         }
     };
 
@@ -23,8 +24,7 @@ const Sidebar = ({ health, stats, topK, setTopK, BASE_URL }) => {
         try {
             setIsloading(true)
             const res = await axios.delete(`${BASE_URL}/documents/${docName}`)
-            const data = res.data
-            if (res.ok) {
+            if (res.status === 200) {
                 setDocuments(documents.filter(doc => doc.document_name !== docName))
                 setTotalDoc(totalDoc - 1)
                 setIsloading(false)
